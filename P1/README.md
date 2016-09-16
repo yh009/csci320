@@ -15,7 +15,7 @@ the output will be dumped into test.out
 
 ### Block Diagram
 Here's the block diagram for the alarm clock:
-![P1 diagram](/diagram/P1.png)
+![P1 diagram](https://gitlab.bucknell.edu/yh009/CSCI320/blob/master/P1/diagram/P1.png)
 
 Here's the explaination for each module:
 1. control module
@@ -34,7 +34,7 @@ Here's the explaination for each module:
 4. buzzer_control module
     The buzzer_control module decides when the buzzer should be on. It takes five 1 bit signal(off, alarm, alarm_on, is_equal,4kHz) and output a 1 bit buzzer signal, which would buzz at
     4kHz when the alarm is triggered. I designed a state machine for this module to work:
-    ![state_machine diagram](/diagram/state_machine.png)
+    ![state_machine diagram](https://gitlab.bucknell.edu/yh009/CSCI320/blob/master/P1/diagram/state_machine.png)
     With this state machine, i can be sure that the buzzer can be turned off when off button pressed. 
 
 5. display module
