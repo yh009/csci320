@@ -26,7 +26,7 @@ wire buzzer;
 	alarmControl my_alarmControl(clk,alarm,alarm_on,alarm_trig,off,buzzer);
 	display my_display(c_min1,c_min2,c_hr1,c_hr2,a_min1,a_min2,a_hr1,a_hr2,alarm,LED1,LED2,LED3,LED4);
 
-
+//Testing starts here
 	initial begin
 		//$dumpon;
 		#1 plus=1;
@@ -61,7 +61,9 @@ wire buzzer;
 		#0.2 off=0;
 		//$dumpoff;
 	end
-	
+//Testing ends here
+
+	//4kHz clock
 	initial begin
 		clk=0;
 	end

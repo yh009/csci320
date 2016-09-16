@@ -1,6 +1,8 @@
 //Yuxuan Huang
 //CS320 Project1
 
+//The timer module handles incrementing/decrementing of clock time. It takes three 1 bit input(c_plus,c_minus,one_Hz), 
+//and output four 4 bit representation of the four clock digits(decimal value in binary form).
 module timer(
 input plus,
 input minus,
@@ -10,6 +12,7 @@ output reg [3:0]min1,min2,hr1,hr2
 
 reg [5:0] counter=0;
 
+//initialize outputs
 initial begin
 	min1=0;
 	min2=0;
@@ -17,6 +20,8 @@ initial begin
 	hr2=0;
 end
 
+
+//handle natural time incrementing on clock
 always @(posedge clk_1hz) begin
 	if(counter==59) begin
 		if(min1==9) begin
@@ -67,6 +72,7 @@ always @(posedge clk_1hz) begin
 	end
 end
 
+//handle time incrementing by plus button pressing on clock
 always @(negedge plus) begin
 	if(min1==9) begin
 		if(min2==5) begin
@@ -104,6 +110,7 @@ always @(negedge plus) begin
 	else min1<=min1+1;
 end
 
+//handle time decrementing by minus button pressing on clock
 always @(negedge minus) begin
 	if(min1==0) begin
 		if(min2==0) begin

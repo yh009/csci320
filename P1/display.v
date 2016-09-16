@@ -1,6 +1,9 @@
 //Yuxuan Huang
 //CS320 Project1
 
+//The display module handles the translation from 4 bit decimal value in binary form to 7 bit output to seven sigment display. 
+//It also decides when to display clock time and when to display alarm time. It takes four 4 bit time signal from timer module 
+//and 4 bit time signal from alarm module. It also takes a 1 bit alarm signal. It output four 7 bit signal to seven sigment display.
 module display(
 input [3:0] c_min1,c_min2,c_hr1,c_hr2,
 input [3:0] a_min1,a_min2,a_hr1,a_hr2,
@@ -23,16 +26,18 @@ parameter seven=7'b0001111;
 parameter eight=7'b0000000;
 parameter nine=7'b0000100;
 parameter off=7'b1111111;
+//clock digits
 reg [6:0]clk1=0;
 reg [6:0]clk2=0;
 reg [6:0]clk3=0;
 reg [6:0]clk4=0;
+//alarm digits
 reg [6:0]a1=0;
 reg [6:0]a2=0;
 reg [6:0]a3=0;
 reg [6:0]a4=0;
 
-
+//assign internal registers to outputs
 always @(*) begin
 	case(alarm)
 		0:begin
@@ -57,6 +62,8 @@ always @(*) begin
 	
 end
 
+
+//converting
 always @(*) begin
 	case(c_min1)
 		0:clk1=zero;
