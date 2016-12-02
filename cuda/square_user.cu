@@ -1,26 +1,24 @@
 //Yuxuan Huang
 #include <stdio.h>
 
-__global__ void square(float * d_out, float * d_in){
-    int idx = threadIdx.x + blockIdx.x*(2048/4);
-    float f = d_in[idx];
-    d_out[idx] = f * f;
+__global__ void square(float * d_out, float * d_in, int N){
+    int idx = threadIdx.x + blockIdx.x*blockDim.x;
+    if (idx < N)
+    {
+    	float f = d_in[idx];
+    	d_out[idx] = f * f;
+    }
 }
 
 int main(int argc, char ** argv) {
-	const int ARRAY_SIZE;
-	const int ARRAY_BYTES = ARRAY_SIZE * sizeof(float);
-	const int BLOCK_NUM;
-	const int BLOCK_SIZE=1024;
-	const int BLOCK_SIZE_R;
+	int ARRAY_SIZE;
+	
 
 	// taking user input
 	printf("Please input an integer value: ");
 	scanf("%d", &ARRAY_SIZE);
 
-	// calculate parameters
-	BLOCK_NUM = (int)ARRAY_SIZE/1024;
-	BLOCK_SIZE_R = (int)ARRAY_SIZE % 1024;
+	int ARRAY_BYTES = ARRAY_SIZE * sizeof(float);
 
 
 
@@ -43,9 +41,16 @@ int main(int argc, char ** argv) {
 	cudaMemcpy(d_in, h_in, ARRAY_BYTES, cudaMemcpyHostToDevice);
 
 	// launch the kernel
-	square<<<BLOCK_NUM, BLOCK_SIZE>>>(d_out, d_in);
+	// Determine the number of blocks needed if ARRAY_SIZE is too large.
+	int numBlocks = 1, threadsPerBlock = ARRAY_SIZE;
+	if (ARRAY_SIZE > 1024)
+	{
+		numBlocks = ARRAY_SIZE/1024 + 1;
+		threadsPerBlock = 1024;
+		
+	}
+	square<<<numBlocks, threadsPerBlock>>>(d_out, d_in, ARRAY_SIZE);
 
-	if 
 
 	// copy back the result array to the CPU
 	cudaMemcpy(h_out, d_out, ARRAY_BYTES, cudaMemcpyDeviceToHost);
